@@ -58,25 +58,27 @@ async def update_user_streaks():
     async with async_session() as session:
         result = await session.execute(select(Message))
         users = result.scalars().all()
+
         today = datetime.now()
+
         for user in users:
-            async with session.begin():  # Use a transaction
-                result = await session.execute(select(Message).where(Message.username == user.username))
-                user = result.scalar_one_or_none()
 
-                if user.timestamp >= today - timedelta(days=1):
-                    result = await session.execute(select(Message.streak_days).where(Message.username == user.username))
-                    result = result.scalar_one_or_none()
-                else:
-                    result = 0
-                stmt = (
-                    update(Message)
-                    .where(Message.username == user.username)
-                    .values(streak_days=result)  # Update timestamp and text
-                )
-                await session.execute(stmt)
 
-            await session.commit()
+            # Если сообщение было отправлено сегодня, обновляем стрик
+            if user.timestamp >= today - timedelta(days=1):
+                user.streak_days += 1
+            else:
+                user.streak_days = 0  # Начать новый стрик
 
 
 
+
+                # Обновление данных пользователя
+            stmt = (
+                update(Message)
+                .where(Message.username == user.username)
+                .values(streak_days=user.streak_days)
+            )
+            await session.execute(stmt)
+
+        await session.commit()

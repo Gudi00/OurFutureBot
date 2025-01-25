@@ -23,7 +23,7 @@ async def main():
     register_admin_handlers(dp)
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_streak_report, CronTrigger(hour=13, minute=50), args=[bot])
+    scheduler.add_job(send_streak_report, CronTrigger(hour=14, minute=00), args=[bot])
     scheduler.start()
 
     await dp.start_polling(bot)
