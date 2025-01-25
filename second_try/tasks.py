@@ -14,7 +14,7 @@ async def send_streak_report(bot: Bot):
 
     # Проверка, что текст сообщения не пустой
     if prices_text:
-        await bot.send_message(chat_id='773103592', text=f"{prices_text}\nЛенивый(е)")
+        await bot.send_message(chat_id='-1002206509266', text=f"{prices_text}\nЛенивый(е)")
 
     await update_user_streaks()
 
@@ -24,4 +24,4 @@ async def send_streak_report(bot: Bot):
     for user in users:
         message += f"Пользователь {user.username}: {user.streak_days} дней\n"
 
-    await bot.send_message(chat_id='773103592', text=message)
+    await bot.send_message(chat_id='-1002206509266', text=message)

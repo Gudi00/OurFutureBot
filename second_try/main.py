@@ -15,7 +15,7 @@ async def main():
 
     await async_main()
 
-    bot = Bot(token='7215760364:AAGGOTKPZ75-opyFTsJDlI4yfGb_rGguvhI')
+    bot = Bot(token='7887236952:AAGVUnHEu6Z5TI1I77drjS1QOU9EP3e4IOo')
     dp = Dispatcher(storage=MemoryStorage())
 
     # Регистрация роутеров
